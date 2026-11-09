@@ -102,3 +102,13 @@ Manual integration checklist: sign in, create a disposable office, create an unp
 ## Student kiosk additions
 
 `src/Kiosk.tsx` implements the public student screen, live question catalog, approved answer/office view, clear/retry controls, and optional browser speech synthesis. `src/kiosk.css` styles it. Top-level routing in App.tsx keeps `/kiosk` independent of staff session restoration. Backend files `server/routes/kiosk.ts` and `kiosk-service.ts` serve published questions and conservative exact matching. `kiosk.test.ts` checks matching behavior. No database migrations are needed. Review KIOSK_TESTING.md before testing or sharing.
+
+## Figma staff redesign — November 10, 2026
+
+Staff login, sidebar, FAQs, offices, filters and dialogs now follow the supplied screenshot references. `src/figma.css` contains staff-specific visual overrides and responsive breakpoints; `src/Brand.tsx` contains a scalable approximation of the logo and inline icons. Import order in `src/main.tsx` places the Figma overrides after the original base styles. Replace the logo approximation with the team's original export when available. Kiosk styles and API contracts are unchanged.
+
+FAQ rows are native expandable details cards. Category/office/status filters and office-building filters use current backend data. Multiple values within one group are OR filters; different groups combine with AND. Category editing remains an editable datalist because there is no category-management endpoint. Office hours remain free text as the backend expects.
+
+Publish/unpublish actions, publication status, timestamps, refresh controls and the kiosk testing link remain available alongside the new visual design. New FAQs remain unpublished unless Published is checked; the new-form button says Save FAQ rather than implying every save publishes. The office delete confirmation correctly names the office, correcting the copied FAQ wording in the screenshots. Remember me is sent as Better Auth's rememberMe flag; passwords are not saved by the application.
+
+Review desktop and narrow-screen layouts, sidebar expansion, accordion keyboard access, multi-select filters, save/cancel/delete dialogs, login field validation, and both remember-me settings. TypeScript and production build passed; browser visual review was blocked by a saved localhost browser permission. Authenticated CRUD should be retested with the development backend. These redesign changes are local until explicitly published.
